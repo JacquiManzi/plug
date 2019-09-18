@@ -47,6 +47,9 @@ defmodule Plug.ErrorHandler do
 
       @doc false
       def handle_errors(conn, assigns) do
+        IO.inspect "we got in handle errors plug"
+        IO.inspect conn
+        IO.inspect assigns
         Plug.Conn.send_resp(conn, conn.status, "Something went wrong")
       end
 
@@ -90,7 +93,7 @@ defmodule Plug.ErrorHandler do
         |> Plug.Conn.put_status(status(kind, normalized_reason))
         |> handle_errors.(%{kind: kind, reason: normalized_reason, stack: stack})
     end
-
+    IO.inspect "here we are raising the error"
     :erlang.raise(kind, reason, stack)
   end
 
